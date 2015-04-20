@@ -1,12 +1,12 @@
 FROM ubuntu:14.04
 
-RUN apt-get update
-RUN apt-get install -y wget zip openjdk-7-jdk
+RUN apt-get update && apt-get install -y \
+	wget \
+	zip  \
+	openjdk-7-jdk
 
-#download
+#download,unzip
 RUN wget -O /tmp/sonarqube-5.1.zip http://dist.sonar.codehaus.org/sonarqube-5.1.zip
-
-#unzip
 RUN unzip -o /tmp/sonarqube-5.1.zip -d /usr/local/
 
 #copy properties
