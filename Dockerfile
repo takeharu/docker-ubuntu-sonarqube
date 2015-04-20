@@ -5,15 +5,20 @@ RUN apt-get update && apt-get install -y \
 	zip  \
 	openjdk-7-jdk
 
+ENV SQ_VERSION 5.1
+ENV SQ_HOME /usr/local/sonarqube-$SQ_VERSION
+
 #download,unzip
-RUN wget -O /tmp/sonarqube-5.1.zip http://dist.sonar.codehaus.org/sonarqube-5.1.zip
-RUN unzip -o /tmp/sonarqube-5.1.zip -d /usr/local/
+RUN wget -O /tmp/SQ.zip http://dist.sonar.codehaus.org/sonarqube-$SQ_VERSION.zip \
+    && unzip -o /tmp/SQ.zip -d /usr/local/ \
+    && rm /tmp/SQ.zip
 
 #copy properties
-RUN cp /usr/local/sonarqube-5.1/conf/sonar.properties /usr/local/sonarqube-5.1/conf/sonar.properties.default
-ADD ./sonar.properties /usr/local/sonarqube-5.1/conf/
+COPY ./sonar.properties $SQ_HOME/conf/
+
+VOLUME $SQ_HOME/extensions
 
 #port
 EXPOSE 9000
 
-CMD ["/usr/local/sonarqube-5.1/bin/linux-x86-64/sonar.sh","console"]
+CMD ["$SQ_HOME/bin/linux-x86-64/sonar.sh","console"]
