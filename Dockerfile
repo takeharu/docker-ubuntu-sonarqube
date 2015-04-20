@@ -21,4 +21,4 @@ VOLUME $SQ_HOME/extensions
 #port
 EXPOSE 9000
 
-CMD ["$SQ_HOME/bin/linux-x86-64/sonar.sh","console"]
+CMD ["/usr/local/sonarqube-5.1/bin/linux-x86-64/sonar.sh","console"]
